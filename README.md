@@ -1,6 +1,6 @@
 # AtmoSenseTEC
 
-Este repositorio contiene el código para el proyecto AtmoSenseTEC, un sistema de monitoreo atmosférico desarrollado en Arduino.
+Este repositorio contiene el código para el proyecto AtmoSenseTEC, un sistema de monitoreo atmosférico desarrollado en Arduino Exclusivamente para la presentacion de prototipos Diciembre 2023 en el Instituto Tecnologico de Los Mochis
 
 ## Descripción
 
@@ -26,3 +26,10 @@ Las contribuciones son bienvenidas. Para contribuir, por favor abre un issue par
 ## Licencia
 
 Este proyecto está licenciado bajo la licencia MIT.
+
+## Colaboracion
+Franklin Daniel Zamora Gutierrez - (Desarrollo de sensado y configuracion).
+Jesus Armando Gonzalez Muñoz - (Desarrollo de GateWay).
+Hector Manuel Millan Olivas - (Diseñador CAD). 
+Victor Manuel Chang Alvarez - (Elaboraboracion de diseño grafico).
+
