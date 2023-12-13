@@ -5,6 +5,8 @@
 #include "TinyGPSPlus.h"                                //GPS - Search "TinyGPS++" and install from Library Manager
 #include <HardwareSerial.h>
 
+#define RAIN_SENSOR_PIN A8
+
 // Declaracion de pines en el hardware
 // Digitales
 const byte WSPEED = 3;
@@ -115,11 +117,13 @@ float wind_dir = 0;   // [degrees (Cardinal)]
 float wind_speed = 0; // [kph]
 float rain = 0;       // [mm]
 
+bool rain_sense = false;
+
 float batt_lvl = 11.8; //[analog value from 0 to 1023]
 float light_lvl = 455; //[analog value from 0 to 1023]
 
 MPL3115A2 myPressure;                                     // Create an instance of the pressure sensor
-Weather myHumidity;                                       // Create an instance of the humidity sensor
+SI7021 myHumidity;                                        // Create an instance of the humidity sensor
 SFEWeatherMeterKit myweatherMeterKit(WDIR, WSPEED, RAIN); // Create an instance of the weather meter kit
 TinyGPSPlus gps;                                          // Create an instance of the gps
 
@@ -148,6 +152,8 @@ void setup()
     Serial2.begin(9600);   // Serial2 is used for LoRa
     Serial3.begin(115200); // Serial2 is used for GPS
 
+    pinMode(RAIN_SENSOR_PIN, INPUT); // Rain sensor
+
     pinMode(STAT1, OUTPUT); // Status LED Blue
     pinMode(STAT2, OUTPUT); // Status LED Green
 
@@ -157,6 +163,7 @@ void setup()
     pinMode(REFERENCE_3V3, INPUT);
     pinMode(LIGHT, INPUT);
 
+    Wire.begin();                    // Join I2C bus
     myPressure.begin();              // Initialize the pressure sensor
     myPressure.setModeBarometer();   // Set to Barometer Mode
     myPressure.setOversampleRate(7); // Set Oversample to the recommended 128
@@ -175,10 +182,25 @@ void setup()
 
 void loop()
 {
+    int rainValue = analogRead(RAIN_SENSOR_PIN);
+    Serial.println(rainValue);
+
     getGps();      // Get GPS data
     calcWeather(); // Get weather data
-    maxandmin();   // Get max and min values
+    // maxandmin();   // Get max and min values
     printWeather();
+
+    if (rainValue < 1020)
+    {
+        rain_sense = true;
+        Serial.println("Lluvia detectada");
+    }
+    else
+    {
+        rain_sense = false;
+        rain = 0;
+        Serial.println("No hay lluvia");
+    }
 
     if (isTimeSynced == true)
     {
@@ -226,7 +248,6 @@ void loop()
             previousHour = hourUTC;
         }
     }
-    
 
     while (Serial2.available() > 0) // Read LoRa
     {
@@ -266,7 +287,7 @@ void loop()
             r3Hrs = false;
             r5Hrs = false;
             rMin = true;
-        }	
+        }
         if (request[0] == 0x01)
         {
             Serial.println("[HOUR SENSE ACTIVATED]");
@@ -277,9 +298,9 @@ void loop()
         }
         if (request[0] == 0x03)
         {
-            hr1 = (int) request[1];
-            hr2 = (int) request[2];
-            hr3 = (int) request[3];
+            hr1 = (int)request[1];
+            hr2 = (int)request[2];
+            hr3 = (int)request[3];
 
             Serial.println("[3 HOURS SENSE ACTIVATED]");
             Serial.print("Hora 1: ");
@@ -299,109 +320,237 @@ void loop()
 
 void frameWithClock()
 {
-    Serial.print("[CLOCK]");
-
-    senseClock[0] = 0x07;
-    senseClock[1] = 0x31;
-    senseClock[2] = 0x02;
-    senseClock[3] = 0x74;
-
-    senseClock[4] = hum.bytes[1]; // Humidity
-    senseClock[5] = hum.bytes[0];
-    senseClock[6] = minhum.bytes[1]; // Min humidity
-    senseClock[7] = minhum.bytes[0];
-    senseClock[8] = minHumHour[1];
-    senseClock[9] = minHumHour[0];
-    senseClock[10] = minHumMin[1];
-    senseClock[11] = minHumMin[0];
-    senseClock[12] = maxhum.bytes[1]; // Max humidity
-    senseClock[13] = maxhum.bytes[0];
-    senseClock[14] = maxHumHour[1];
-    senseClock[15] = maxHumHour[0];
-    senseClock[16] = maxHumMin[1];
-    senseClock[17] = maxHumMin[0];
-
-    senseClock[18] = temp.bytes[1]; // Temperature
-    senseClock[19] = temp.bytes[0];
-    senseClock[20] = mintemp.bytes[1]; // Min temp
-    senseClock[21] = mintemp.bytes[0];
-    senseClock[22] = minTempHour[1];
-    senseClock[23] = minTempHour[0];
-    senseClock[24] = minTempMin[1];
-    senseClock[25] = minTempMin[0];
-    senseClock[26] = maxtemp.bytes[1]; // Max temp
-    senseClock[27] = maxtemp.bytes[0];
-    senseClock[28] = maxTempHour[1];
-    senseClock[29] = maxTempHour[0];
-    senseClock[30] = maxTempMin[1];
-    senseClock[31] = maxTempMin[0];
-
-    senseClock[32] = press.bytes[3]; // Pressure
-    senseClock[33] = press.bytes[2];
-    senseClock[34] = press.bytes[1];
-    senseClock[35] = press.bytes[0];
-    senseClock[36] = minpress.bytes[3]; // Min pressure
-    senseClock[37] = minpress.bytes[2];
-    senseClock[38] = minpress.bytes[1];
-    senseClock[39] = minpress.bytes[0];
-    senseClock[40] = minPressHour[1];
-    senseClock[41] = minPressHour[0];
-    senseClock[42] = minPressMin[1];
-    senseClock[43] = minPressMin[0];
-    senseClock[44] = maxpress.bytes[3]; // Max pressure
-    senseClock[45] = maxpress.bytes[2];
-    senseClock[46] = maxpress.bytes[1];
-    senseClock[47] = maxpress.bytes[0];
-    senseClock[48] = maxPressHour[1];
-    senseClock[49] = maxPressHour[0];
-    senseClock[50] = maxPressMin[1];
-    senseClock[51] = maxPressMin[0];
-
-    senseClock[52] = wDir.bytes[1]; // Wind direction
-    senseClock[53] = wDir.bytes[0];
-
-    senseClock[54] = wSpeed.bytes[1]; // Wind speed
-    senseClock[55] = wSpeed.bytes[0];
-    senseClock[56] = minwind.bytes[1]; // Min wind speed
-    senseClock[57] = minwind.bytes[0];
-    senseClock[58] = minWindSpeedHour[1];
-    senseClock[59] = minWindSpeedHour[0];
-    senseClock[60] = minWindSpeedMin[1];
-    senseClock[61] = minWindSpeedMin[0];
-    senseClock[62] = maxwind.bytes[1]; // Max wind speed
-    senseClock[63] = maxwind.bytes[0];
-    senseClock[64] = maxWindSpeedHour[1];
-    senseClock[65] = maxWindSpeedHour[0];
-    senseClock[66] = maxWindSpeedMin[1];
-    senseClock[67] = maxWindSpeedMin[0];
-
-    senseClock[68] = 0x00;            // BOOL RAIN SENSOR
-    senseClock[69] = rCount.bytes[3]; // Rain
-    senseClock[70] = rCount.bytes[2];
-    senseClock[71] = rCount.bytes[1];
-    senseClock[72] = rCount.bytes[0];  // Corrected line
-    senseClock[73] = minrain.bytes[3]; // Min rain
-    senseClock[74] = minrain.bytes[2];
-    senseClock[75] = minrain.bytes[1];
-    senseClock[76] = minrain.bytes[0];
-    senseClock[77] = minRainHour[1];
-    senseClock[78] = minRainHour[0];
-    senseClock[79] = minRainMin[1];
-    senseClock[80] = minRainMin[0];
-    senseClock[81] = maxrain.bytes[3]; // Max rain
-    senseClock[82] = maxrain.bytes[2];
-    senseClock[83] = maxrain.bytes[1];
-    senseClock[84] = maxrain.bytes[0];
-    senseClock[85] = maxRainHour[1];
-    senseClock[86] = maxRainHour[0];
-    senseClock[87] = maxRainMin[1];
-    senseClock[88] = maxRainMin[0];
-
-    debug(senseClock, sizeof(senseClock));
-
-    for (int i = 0; i < sizeof(senseClock); i++)
+    if (isTimeSynced == true)
     {
-        Serial2.write(senseClock[i]); // Send frame to LoRa
+        if (hum.value < _MinHum)
+        {
+            _MinHum = hum.value;
+            minhum.value = _MinHum; // Min Hum
+
+            minHumHour[0] = decHour[1];
+            minHumHour[1] = decHour[0];
+            minHumMin[0] = decMinute[1];
+            minHumMin[1] = decMinute[0];
+        }
+
+        if (hum.value > _MaxHum)
+        {
+            _MaxHum = hum.value;
+            maxhum.value = _MaxHum;
+
+            maxHumHour[0] = decHour[1];
+            maxHumHour[1] = decHour[0];
+            maxHumMin[0] = decMinute[1];
+            maxHumMin[1] = decMinute[0];
+        }
+
+        if (temp.value < _MinTemp)
+        {
+            _MinTemp = temp.value;
+            mintemp.value = _MinTemp; // Min temp
+
+            minTempHour[0] = decHour[1];
+            minTempHour[1] = decHour[0];
+            minTempMin[0] = decMinute[1];
+            minTempMin[1] = decMinute[0];
+        }
+
+        if (temp.value > _MaxTemp)
+        {
+            _MaxTemp = temp.value;
+            maxtemp.value = _MaxTemp; // Max temp
+
+            maxTempHour[0] = decHour[1];
+            maxTempHour[1] = decHour[0];
+            maxTempMin[0] = decMinute[1];
+            maxTempMin[1] = decMinute[0];
+        }
+
+        if (press.value / 100 < _MinPress)
+        {
+            _MinPress = press.value;
+            minpress.value = _MinPress; // Min pressure
+
+            minPressHour[0] = decHour[1];
+            minPressHour[1] = decHour[0];
+            minPressMin[0] = decMinute[1];
+            minPressMin[1] = decMinute[0];
+        }
+
+        if (press.value / 100 > _MaxPress)
+        {
+            _MaxPress = press.value;
+            maxpress.value = _MaxPress; // Max pressure
+
+            maxPressHour[0] = decHour[1];
+            maxPressHour[1] = decHour[0];
+            maxPressMin[0] = decMinute[1];
+            maxPressMin[1] = decMinute[0];
+        }
+
+        if (wSpeed.value < _MinWindSpeed)
+        {
+            _MinWindSpeed = wSpeed.value;
+            minwind.value = _MinWindSpeed; // Min wind speed
+
+            minWindSpeedHour[0] = decHour[1];
+            minWindSpeedHour[1] = decHour[0];
+            minWindSpeedMin[0] = decMinute[1];
+            minWindSpeedMin[1] = decMinute[0];
+        }
+
+        if (wSpeed.value > _MaxWindSpeed)
+        {
+            _MaxWindSpeed = 144;
+            maxwind.value = _MaxWindSpeed; // Max wind speed
+
+            maxWindSpeedHour[0] = decHour[1];
+            maxWindSpeedHour[1] = decHour[0];
+            maxWindSpeedMin[0] = decMinute[1];
+            maxWindSpeedMin[1] = decMinute[0];
+        }
+
+        if (rCount.value < _MinRain)
+        {
+            _MinRain = rCount.value;
+            minrain.value = _MinRain; // Min rain
+
+            minRainHour[0] = decHour[1];
+            minRainHour[1] = decHour[0];
+            minRainMin[0] = decMinute[1];
+            minRainMin[1] = decMinute[0];
+        }
+
+        if (rCount.value > _MaxRain)
+        {
+            _MaxRain = rCount.value;
+            maxrain.value = _MaxRain; // Max rain
+
+            maxRainHour[0] = decHour[1];
+            maxRainHour[1] = decHour[0];
+            maxRainMin[0] = decMinute[1];
+            maxRainMin[1] = decMinute[0];
+        }
+
+        Serial.print("[CLOCK]");
+
+        senseClock[0] = 0x07;
+        senseClock[1] = 0x31;
+        senseClock[2] = 0x02;
+        senseClock[3] = 0x74;
+
+        senseClock[4] = hum.bytes[1]; // Humidity
+        senseClock[5] = hum.bytes[0];
+        senseClock[6] = minhum.bytes[1]; // Min humidity
+        senseClock[7] = minhum.bytes[0];
+        senseClock[8] = minHumHour[1];
+        senseClock[9] = minHumHour[0];
+        senseClock[10] = minHumMin[1];
+        senseClock[11] = minHumMin[0];
+        senseClock[12] = maxhum.bytes[1]; // Max humidity
+        senseClock[13] = maxhum.bytes[0];
+        senseClock[14] = maxHumHour[1];
+        senseClock[15] = maxHumHour[0];
+        senseClock[16] = maxHumMin[1];
+        senseClock[17] = maxHumMin[0];
+
+        senseClock[18] = temp.bytes[1]; // Temperature
+        senseClock[19] = temp.bytes[0];
+        senseClock[20] = mintemp.bytes[1]; // Min temp
+        senseClock[21] = mintemp.bytes[0];
+        senseClock[22] = minTempHour[1];
+        senseClock[23] = minTempHour[0];
+        senseClock[24] = minTempMin[1];
+        senseClock[25] = minTempMin[0];
+        senseClock[26] = maxtemp.bytes[1]; // Max temp
+        senseClock[27] = maxtemp.bytes[0];
+        senseClock[28] = maxTempHour[1];
+        senseClock[29] = maxTempHour[0];
+        senseClock[30] = maxTempMin[1];
+        senseClock[31] = maxTempMin[0];
+
+        senseClock[32] = press.bytes[3]; // Pressure
+        senseClock[33] = press.bytes[2];
+        senseClock[34] = press.bytes[1];
+        senseClock[35] = press.bytes[0];
+        senseClock[36] = minpress.bytes[3]; // Min pressure
+        senseClock[37] = minpress.bytes[2];
+        senseClock[38] = minpress.bytes[1];
+        senseClock[39] = minpress.bytes[0];
+        senseClock[40] = minPressHour[1];
+        senseClock[41] = minPressHour[0];
+        senseClock[42] = minPressMin[1];
+        senseClock[43] = minPressMin[0];
+        senseClock[44] = maxpress.bytes[3]; // Max pressure
+        senseClock[45] = maxpress.bytes[2];
+        senseClock[46] = maxpress.bytes[1];
+        senseClock[47] = maxpress.bytes[0];
+        senseClock[48] = maxPressHour[1];
+        senseClock[49] = maxPressHour[0];
+        senseClock[50] = maxPressMin[1];
+        senseClock[51] = maxPressMin[0];
+
+        senseClock[52] = wDir.bytes[1]; // Wind direction
+        senseClock[53] = wDir.bytes[0];
+
+        senseClock[54] = wSpeed.bytes[1]; // Wind speed
+        senseClock[55] = wSpeed.bytes[0];
+        senseClock[56] = minwind.bytes[1]; // Min wind speed
+        senseClock[57] = minwind.bytes[0];
+        senseClock[58] = minWindSpeedHour[1];
+        senseClock[59] = minWindSpeedHour[0];
+        senseClock[60] = minWindSpeedMin[1];
+        senseClock[61] = minWindSpeedMin[0];
+        senseClock[62] = maxwind.bytes[1]; // Max wind speed
+        senseClock[63] = maxwind.bytes[0];
+        senseClock[64] = maxWindSpeedHour[1];
+        senseClock[65] = maxWindSpeedHour[0];
+        senseClock[66] = maxWindSpeedMin[1];
+        senseClock[67] = maxWindSpeedMin[0];
+
+        senseClock[68] = rain_sense;      // BOOL RAIN SENSOR
+        senseClock[69] = rCount.bytes[3]; // Rain
+        senseClock[70] = rCount.bytes[2];
+        senseClock[71] = rCount.bytes[1];
+        senseClock[72] = rCount.bytes[0];  // Corrected line
+        senseClock[73] = minrain.bytes[3]; // Min rain
+        senseClock[74] = minrain.bytes[2];
+        senseClock[75] = minrain.bytes[1];
+        senseClock[76] = minrain.bytes[0];
+        senseClock[77] = minRainHour[1];
+        senseClock[78] = minRainHour[0];
+        senseClock[79] = minRainMin[1];
+        senseClock[80] = minRainMin[0];
+        senseClock[81] = maxrain.bytes[3]; // Max rain
+        senseClock[82] = maxrain.bytes[2];
+        senseClock[83] = maxrain.bytes[1];
+        senseClock[84] = maxrain.bytes[0];
+        senseClock[85] = maxRainHour[1];
+        senseClock[86] = maxRainHour[0];
+        senseClock[87] = maxRainMin[1];
+        senseClock[88] = maxRainMin[0];
+
+        for (int i = 0; i < 89; i++)
+        {
+            Serial2.write(senseClock[i]); // Send frame to LoRa
+            Serial.print(senseClock[i], HEX);
+            Serial.print(" ");
+        }
+        Serial.println();
+        Serial.print("Min WS Hour: ");
+        Serial.print(minWindSpeedHour[1], HEX);
+        Serial.print(minWindSpeedHour[0], HEX);
+        Serial.print(" ");
+        Serial.print(minWindSpeedMin[1], HEX);
+        Serial.print(minWindSpeedMin[0], HEX);
+        Serial.println();
+        Serial.print("Max WS Hour: ");
+        Serial.print(maxWindSpeedHour[1], HEX);
+        Serial.print(maxWindSpeedHour[0], HEX);
+        Serial.print(" ");
+        Serial.print(maxWindSpeedMin[1], HEX);
+        Serial.print(maxWindSpeedMin[0], HEX);
+        Serial.println();
     }
 }
 
@@ -434,9 +583,10 @@ void frameNotClock()
     for (int i = 0; i < sizeof(sense); i++)
     {
         Serial2.write(sense[i]); // Send frame to LoRa
+        Serial.print(sense[i], HEX);
+        Serial.print(" ");
     }
-
-    debug(sense, sizeof(sense));
+    Serial.println();
 }
 
 void calcWeather()
@@ -478,7 +628,7 @@ void calcWeather()
 
 void monitorProfile()
 {
-    if (isTimeSynced && gps.location.isValid() == 1)
+    if (isTimeSynced)
     {
         Serial.print("[PROFILE MONITOR]");
 
@@ -500,9 +650,10 @@ void monitorProfile()
         for (int i = 0; i < sizeof(frameprofile); i++)
         {
             Serial2.write(frameprofile[i]); // Send frame to LoRa
+            Serial.print(frameprofile[i], HEX);
+            Serial.print(" ");
         }
-
-        debug(frameprofile, sizeof(frameprofile));
+        Serial.println();
     }
 }
 
@@ -547,19 +698,13 @@ void printWeather()
     Serial.print(_MinRain / 100, 1);
     Serial.print(" mm");
     Serial.println();
-}
 
-void debug(byte frame[], int len)
-{
-    for (int i = 0; i < len; i++)
-    {
-        Serial.print(frame[i], HEX);
-        if (frame[i] < 0x10)
-        {
-            Serial.print("0");
-        }
-        Serial.print(" ");
-    }
+    Serial.print("Max WS Hour: ");
+    Serial.print(maxWindSpeedHour[1], HEX);
+    Serial.print(maxWindSpeedHour[0], HEX);
+    Serial.print(" Max SWS Min: ");
+    Serial.print(maxWindSpeedMin[1], HEX);
+    Serial.print(maxWindSpeedMin[0], HEX);
     Serial.println();
 }
 
@@ -602,21 +747,26 @@ void getGps(void) // Get data clock for GPS
         Serial.println(secondsUTC);
     }
 
-    if (gps.location.isValid())
+    latitude = gps.location.lat();
+    longitude = gps.location.lng();
+
+    Serial.print("Latitud: ");
+    Serial.print(latitude, 6);
+    Serial.print(" Longitud: ");
+    Serial.println(longitude, 6);
+
+    if (gps.location.isValid() == 1)
     {
-
-        latitude = gps.location.lat();
-        longitude = gps.location.lng();
-
-        Serial.print("Latitud: ");
-        Serial.print(latitude, 6);
-        Serial.print(" Longitud: ");
-        Serial.println(longitude, 6);
+        digitalWrite(STAT2, HIGH);
+    }
+    else
+    {
+        digitalWrite(STAT2, LOW);
     }
 
     sprintf(decHour, "%02d", hourUTC);
     sprintf(decMinute, "%02d", minuteUTC);
-    
+
     smartdelay(1000);
 }
 
@@ -630,6 +780,7 @@ static void smartdelay(unsigned long ms) // Smartdelay for GPS
     } while (millis() - start < ms);
 }
 
+/*
 void maxandmin()
 {
     if (hum.value < _MinHum)
@@ -741,7 +892,7 @@ void maxandmin()
         maxRainMin[0] = decMinute[1];
         maxRainMin[1] = decMinute[0];
     }
-}
+}*/
 
 float get_battery_level()
 {
