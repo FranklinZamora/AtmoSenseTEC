@@ -1,0 +1,1214 @@
+[
+    {
+        "id": "d8bf3599de23bf93",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c70216ec7e924edc",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "temperatura_s",
+        "label": "Superior",
+        "tooltip": "",
+        "group": "0344b3ccb84efdbb",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "99",
+        "step": 1,
+        "className": "",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "a533157105f15b92",
+                "f4458bfe85a3665f"
+            ]
+        ]
+    },
+    {
+        "id": "f31bfb95db4d5bca",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "temperatura_i",
+        "label": "Inferior",
+        "tooltip": "",
+        "group": "0344b3ccb84efdbb",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "temp",
+        "topicType": "msg",
+        "min": 0,
+        "max": "99",
+        "step": 1,
+        "className": "",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "1f9f8e4bdca7b7c3",
+                "d2ee12fecf1dee2d"
+            ]
+        ]
+    },
+    {
+        "id": "23c8dc9440883a06",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "sup_presion",
+        "label": "Superior",
+        "tooltip": "",
+        "group": "135eb414e4f52247",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "1500000",
+        "step": "10000",
+        "className": "",
+        "x": 110,
+        "y": 620,
+        "wires": [
+            [
+                "1b991963ec09256b",
+                "ed5bb28171f7f59c"
+            ]
+        ]
+    },
+    {
+        "id": "5f58d3520240190e",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "inf_presion",
+        "label": "Inferior",
+        "tooltip": "",
+        "group": "135eb414e4f52247",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "temp",
+        "topicType": "msg",
+        "min": 0,
+        "max": "1500000",
+        "step": "10000",
+        "className": "",
+        "x": 110,
+        "y": 700,
+        "wires": [
+            [
+                "26397231a327639a",
+                "a8b59daab88efe81"
+            ]
+        ]
+    },
+    {
+        "id": "e5fecae72552ec23",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "0344b3ccb84efdbb",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4e3bc2916d40af9c",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "0344b3ccb84efdbb",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "127ed5c3767b55db",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "135eb414e4f52247",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 590,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "5d6b04719dbede56",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "135eb414e4f52247",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "576090cff594cdf2",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "Humedad_s",
+        "label": "Superior",
+        "tooltip": "",
+        "group": "f87db2fb63aa44a2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "99",
+        "step": 1,
+        "className": "",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "6a345c8fe5a95b66",
+                "b809897410a68fd6"
+            ]
+        ]
+    },
+    {
+        "id": "75ebcf5b0e146a73",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "Humedad_i",
+        "label": "Inferior",
+        "tooltip": "",
+        "group": "f87db2fb63aa44a2",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "temp",
+        "topicType": "msg",
+        "min": 0,
+        "max": "99",
+        "step": 1,
+        "className": "",
+        "x": 110,
+        "y": 520,
+        "wires": [
+            [
+                "7fa32d67264c78c1",
+                "3b43dfd336b1137a"
+            ]
+        ]
+    },
+    {
+        "id": "1b984e48e03ae4d5",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "f87db2fb63aa44a2",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 590,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "79434abacac0088b",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "f87db2fb63aa44a2",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 610,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "a533157105f15b92",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 36",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"sup_temperatura\",sup);\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x00,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c03325ada37402f7",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "Variables globales",
+        "func": "var sup = global.get(\"distancia_sup\");\nvar inf = global.get(\"distancia_inf\")\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x00,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1f9f8e4bdca7b7c3",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 38",
+        "func": "var sup = msg.payload;\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x01,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b991963ec09256b",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 39",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"inf_presion\", sup);\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x04,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "26397231a327639a",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 40",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"sup_presion\", sup);\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x05,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a345c8fe5a95b66",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 41",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"sup_humedad\", sup);\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x02,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7fa32d67264c78c1",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 42",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"inf_humedad\", sup);\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x03,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6c4d66d4c0978bd",
+        "type": "debug",
+        "z": "d8bf3599de23bf93",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1640,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "442d2bb9d9a53ff4",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 43",
+        "func": "var sup = msg.payload;\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x06,0x48];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1370,
+        "y": 40,
+        "wires": [
+            [
+                "e6c4d66d4c0978bd"
+            ]
+        ]
+    },
+    {
+        "id": "1ca5858bbc015fed",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "lluvia",
+        "func": "var sup = msg.payload;\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x02,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3c2ef27e25da16e",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "lluvia2",
+        "func": "var sup = msg.payload;\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x03,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f4458bfe85a3665f",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 52",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"sup_temperatura\",sup);\n\nmsg.payload = msg.payload + \" Â°C\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 140,
+        "wires": [
+            [
+                "e5fecae72552ec23"
+            ]
+        ]
+    },
+    {
+        "id": "d2ee12fecf1dee2d",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 54",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"inf_temperatura\",sup);\n\nmsg.payload = msg.payload + \" Â°C\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 340,
+        "wires": [
+            [
+                "4e3bc2916d40af9c"
+            ]
+        ]
+    },
+    {
+        "id": "e50e6afb7bfc8517",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "sup_viento",
+        "label": "Superior",
+        "tooltip": "",
+        "group": "ae58deda8fd93067",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "99",
+        "step": 1,
+        "className": "",
+        "x": 110,
+        "y": 1040,
+        "wires": [
+            [
+                "18eb2518b054e693",
+                "5049175e19bc4585",
+                "1064f15c46c3e9cf"
+            ]
+        ]
+    },
+    {
+        "id": "1521efe2d9779a58",
+        "type": "ui_slider",
+        "z": "d8bf3599de23bf93",
+        "name": "inf_viento",
+        "label": "Inferior",
+        "tooltip": "",
+        "group": "ae58deda8fd93067",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "temp",
+        "topicType": "msg",
+        "min": 0,
+        "max": "99",
+        "step": 1,
+        "className": "",
+        "x": 100,
+        "y": 1160,
+        "wires": [
+            [
+                "84b9a2c8013137e2",
+                "a605f19be6b5d493",
+                "879b6d6fde917368"
+            ]
+        ]
+    },
+    {
+        "id": "37111c0dfa3c4d86",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "ae58deda8fd93067",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 590,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "2725815a18faf43f",
+        "type": "ui_text",
+        "z": "d8bf3599de23bf93",
+        "group": "ae58deda8fd93067",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Valor:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 590,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "18eb2518b054e693",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 59",
+        "func": "var sup = msg.payload;\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x02,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "84b9a2c8013137e2",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 60",
+        "func": "var sup = msg.payload;\n\nvar hexa = sup.toString(16);\n\nmsg.payload = [0x05,0x43,0x02,0x03,hexa ];\n//msg.payload = \"U100\"+'/'+'21'+'/'+ sup +'/'+ inf + '/';\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0fa094091661b790",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 78",
+        "func": "var buffer = Buffer.from([0x05, 0x43, 0x02, 0x73]);\n\nmsg.payload = buffer;//[0x05, 0x43, 0x02, 0x73];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 460,
+        "wires": [
+            [
+                "c45ea1efdff29616",
+                "461b8395a7f3a5d4"
+            ]
+        ]
+    },
+    {
+        "id": "297833dcf50c9fca",
+        "type": "ui_button",
+        "z": "d8bf3599de23bf93",
+        "name": "",
+        "group": "57f2bf437286d7b3",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Get",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 870,
+        "y": 460,
+        "wires": [
+            [
+                "0fa094091661b790"
+            ]
+        ]
+    },
+    {
+        "id": "59d56abbee604bdb",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 79",
+        "func": "var buffer = Buffer.from([0x05, 0x43, 0x02, 0x4D]);\n\nmsg.payload = buffer;//[0x05, 0x43, 0x02, 0x73];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 360,
+        "wires": [
+            [
+                "c45ea1efdff29616",
+                "461b8395a7f3a5d4"
+            ]
+        ]
+    },
+    {
+        "id": "7cd70a4965b6b9ee",
+        "type": "ui_button",
+        "z": "d8bf3599de23bf93",
+        "name": "",
+        "group": "57f2bf437286d7b3",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Monitor",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 860,
+        "y": 360,
+        "wires": [
+            [
+                "59d56abbee604bdb"
+            ]
+        ]
+    },
+    {
+        "id": "557815bcf992364a",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 80",
+        "func": "var buffer = Buffer.from([0x05, 0x43, 0x02, 0x49]);\n\nmsg.payload = buffer;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 540,
+        "wires": [
+            [
+                "c45ea1efdff29616"
+            ]
+        ]
+    },
+    {
+        "id": "4497eea8b62b2960",
+        "type": "ui_button",
+        "z": "d8bf3599de23bf93",
+        "name": "",
+        "group": "57f2bf437286d7b3",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Minuto",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 870,
+        "y": 540,
+        "wires": [
+            [
+                "557815bcf992364a"
+            ]
+        ]
+    },
+    {
+        "id": "892cdf8468019a84",
+        "type": "ui_button",
+        "z": "d8bf3599de23bf93",
+        "name": "",
+        "group": "57f2bf437286d7b3",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Hora",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 870,
+        "y": 640,
+        "wires": [
+            [
+                "e2f287361dfadabd"
+            ]
+        ]
+    },
+    {
+        "id": "e2f287361dfadabd",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 83",
+        "func": "var buffer = Buffer.from([0x05, 0x43, 0x02, 0x01]);\n\nmsg.payload = buffer;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 640,
+        "wires": [
+            [
+                "c45ea1efdff29616"
+            ]
+        ]
+    },
+    {
+        "id": "4c1de078b45f6f51",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 87",
+        "func": "var buffer = Buffer.from([0x05,0x43,0x02,0x73]);\n\nmsg.payload = buffer;//[0x05, 0x43, 0x02, 0x73];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 180,
+        "wires": [
+            [
+                "c45ea1efdff29616"
+            ]
+        ]
+    },
+    {
+        "id": "9bf7808e3833187a",
+        "type": "inject",
+        "z": "d8bf3599de23bf93",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "hola",
+        "payloadType": "str",
+        "x": 750,
+        "y": 140,
+        "wires": [
+            [
+                "4c1de078b45f6f51"
+            ]
+        ]
+    },
+    {
+        "id": "c45ea1efdff29616",
+        "type": "serial out",
+        "z": "d8bf3599de23bf93",
+        "name": "",
+        "serial": "0e227ca069ec8245",
+        "x": 1560,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "461b8395a7f3a5d4",
+        "type": "debug",
+        "z": "d8bf3599de23bf93",
+        "name": "debug 25",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "6c28c87cafa9dc28",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "Hora_3",
+        "func": "var buffer = Buffer.from([0x05, 0x43, 0x02, 0x03]);\n\nmsg.payload = buffer;\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5049175e19bc4585",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 94",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"sup_viento\",sup);\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a605f19be6b5d493",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 95",
+        "func": "var sup = msg.payload;\n\nglobal.set(\"inf_viento\",sup);\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b809897410a68fd6",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 99",
+        "func": "var sup = msg.payload;\n\nmsg.payload = msg.payload + \" %\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "1b984e48e03ae4d5"
+            ]
+        ]
+    },
+    {
+        "id": "3b43dfd336b1137a",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 100",
+        "func": "var sup = msg.payload;\n\nmsg.payload = msg.payload + \" %\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 580,
+        "wires": [
+            [
+                "79434abacac0088b"
+            ]
+        ]
+    },
+    {
+        "id": "ed5bb28171f7f59c",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 101",
+        "func": "var sup = msg.payload;\n\nmsg.payload = msg.payload + \" Pa\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "127ed5c3767b55db"
+            ]
+        ]
+    },
+    {
+        "id": "a8b59daab88efe81",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 102",
+        "func": "var sup = msg.payload;\n\nmsg.payload = msg.payload + \" Pa\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 780,
+        "wires": [
+            [
+                "5d6b04719dbede56"
+            ]
+        ]
+    },
+    {
+        "id": "1064f15c46c3e9cf",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 103",
+        "func": "var sup = msg.payload;\n\nmsg.payload = msg.payload + \" Km/h\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 1000,
+        "wires": [
+            [
+                "37111c0dfa3c4d86"
+            ]
+        ]
+    },
+    {
+        "id": "879b6d6fde917368",
+        "type": "function",
+        "z": "d8bf3599de23bf93",
+        "name": "function 104",
+        "func": "var sup = msg.payload;\n\nmsg.payload = msg.payload + \" Km/h\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 1140,
+        "wires": [
+            [
+                "2725815a18faf43f"
+            ]
+        ]
+    },
+    {
+        "id": "0344b3ccb84efdbb",
+        "type": "ui_group",
+        "name": "Control de temperatura",
+        "tab": "67ddf005771d6c3c",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "135eb414e4f52247",
+        "type": "ui_group",
+        "name": "Control de presion",
+        "tab": "67ddf005771d6c3c",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f87db2fb63aa44a2",
+        "type": "ui_group",
+        "name": "Control de humedad",
+        "tab": "67ddf005771d6c3c",
+        "order": 4,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ae58deda8fd93067",
+        "type": "ui_group",
+        "name": "Control de viento",
+        "tab": "67ddf005771d6c3c",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "57f2bf437286d7b3",
+        "type": "ui_group",
+        "name": "SELF",
+        "tab": "2b8b14ac054e5b54",
+        "order": 1,
+        "disp": false,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0e227ca069ec8245",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "/dev/ttyS0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "2000",
+        "bin": "bin",
+        "out": "time",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "67ddf005771d6c3c",
+        "type": "ui_tab",
+        "name": "Main Control",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "2b8b14ac054e5b54",
+        "type": "ui_tab",
+        "name": "Data",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
