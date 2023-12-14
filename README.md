@@ -23,10 +23,6 @@ Una vez que el código ha sido subido a tu Arduino, el sistema comenzará a moni
 
 Las contribuciones son bienvenidas. Para contribuir, por favor abre un issue para discutir los cambios que te gustaría hacer o haz un fork del repositorio y crea un nuevo pull request.
 
-## Licencia
-
-Este proyecto está licenciado bajo la licencia MIT.
-
 ## Colaboracion
 Franklin Daniel Zamora Gutierrez - (Desarrollo de sensado y configuracion).
 Jesus Armando Gonzalez Muñoz - (Desarrollo de GateWay).
